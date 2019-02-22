@@ -7,29 +7,31 @@ export default class Board extends Component {
     renderSquare = (i) => {
         return <Square
             value={this.props.squares[i]}
+            key={i}
             onClick={() => this.props.onClick(i)}
         />
     }
 
+
     render() {
+        const arrayWith = [
+            [0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8]
+        ];
+
+        const renderSqueres = arrayWith.map((innerArray, index) => {
+            let groupSquare = [];
+            innerArray.map((value, index) => {
+                groupSquare.push(this.renderSquare(value))
+            })
+            return <div key={index} className="col-one">{groupSquare}</div>
+        })
+
         return (
             <div>
                 <div className="board">
-                    <div className="col-one">
-                        {this.renderSquare(0)}
-                        {this.renderSquare(1)}
-                        {this.renderSquare(2)}
-                    </div>
-                    <div className="col-one">
-                        {this.renderSquare(3)}
-                        {this.renderSquare(4)}
-                        {this.renderSquare(5)}
-                    </div>
-                    <div className="col-one">
-                        {this.renderSquare(6)}
-                        {this.renderSquare(7)}
-                        {this.renderSquare(8)}
-                    </div>
+                    {renderSqueres}
                 </div>
             </div>
         )
