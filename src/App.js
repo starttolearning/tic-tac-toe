@@ -14,6 +14,7 @@ class App extends Component {
       positons: Array(9).fill(null),
       xIsNext: true,
       stepNumber: 0,
+      classes: Array(9).fill(null),
     }
   }
 
@@ -79,9 +80,13 @@ class App extends Component {
   }
 
   jumpTo(step) {
+    const classes = Array(9).fill()
+    classes[step] = 'bold'
+
     this.setState({
       stepNumber: step,
       xIsNext: (step % 2) === 0,
+      classes: classes,
     })
   }
 
@@ -98,7 +103,7 @@ class App extends Component {
       // console.log(step)
       return (
         <li key={move}>
-          <button onClick={() => this.jumpTo(move)}>{desc}</button>
+          <button className={this.state.classes[move] ? 'move-bold' : ''} onClick={() => this.jumpTo(move)}>{desc}</button>
         </li>
       )
     })

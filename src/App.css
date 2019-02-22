@@ -40,3 +40,7 @@
 .col-one button:focus {
   outline: none;
 }
+
+.move-bold{
+  font-weight: bold;
+}
