@@ -11,6 +11,7 @@ class App extends Component {
       history: [{
         squares: Array(9).fill(null),
       }],
+      positons: Array(9).fill(null),
       xIsNext: true,
       stepNumber: 0,
     }
@@ -38,6 +39,20 @@ class App extends Component {
   }
 
   handleClick = (i) => {
+    const positons = this.state.positons.slice();
+
+    const positonsCords = [
+      [1, 1],
+      [1, 2],
+      [1, 3],
+      [2, 1],
+      [2, 2],
+      [2, 3],
+      [3, 1],
+      [3, 2],
+      [3, 3],
+    ]
+
     const history = this.state.history.slice(0, this.state.stepNumber + 1);
     const current = history[history.length - 1];
     const squares = current.squares.slice();
@@ -47,12 +62,19 @@ class App extends Component {
     }
     squares[i] = this.state.xIsNext ? 'X' : 'O'
 
+
     this.setState({
       history: history.concat([{
         squares: squares,
       }]),
       xIsNext: !this.state.xIsNext,
       stepNumber: history.length,
+    })
+
+    positons[this.state.stepNumber + 1] = positonsCords[i]
+
+    this.setState({
+      positons: positons
     })
   }
 
@@ -71,8 +93,9 @@ class App extends Component {
 
     const moves = history.map((step, move) => {
       const desc = move ?
-        'Go to move # ' + move :
+        'Positon: (' + this.state.positons[move] + '). Go to move # ' + move :
         'Go to game start'
+      // console.log(step)
       return (
         <li key={move}>
           <button onClick={() => this.jumpTo(move)}>{desc}</button>
