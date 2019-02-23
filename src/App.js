@@ -125,7 +125,10 @@ class App extends Component {
     // console.log(winner)
     if (winner) {
       status = 'Winner: ' + winner[0];
-    } else {
+    } else if (!winner && this.state.stepNumber === 9) {
+      status = 'Being a Draw!'
+    }
+    else {
       status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
     }
 
