@@ -2,7 +2,7 @@
   "name": "tic-toc",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://starttolearning.github.io/tic-tac-toe",
+  "homepage": "https://starttolearning.github.io/tic-tac-toe",
   "dependencies": {
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
