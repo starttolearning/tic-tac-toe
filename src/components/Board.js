@@ -4,8 +4,26 @@ import Square from './Square'
 
 export default class Board extends Component {
 
+    contains = (arr, obj) => {
+        var i = arr.length;
+        while (i--) {
+            if (arr[i] === obj) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     renderSquare = (i) => {
-        return <Square
+
+        let red = ''
+        if (this.props.winner) {
+            const [a, b] = this.props.winner
+            red = this.contains(b, i) ? 'red' : ''
+            // console.log(a, b, i, red)
+        }
+
+        return <Square winnerColored={red ? red : ''}
             value={this.props.squares[i]}
             key={i}
             onClick={() => this.props.onClick(i)}

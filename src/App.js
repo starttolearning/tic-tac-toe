@@ -15,6 +15,8 @@ class App extends Component {
       xIsNext: true,
       stepNumber: 0,
       classes: Array(9).fill(null),
+      toggleOrder: true,
+      winnerLine: [-1, -1, -1]
     }
   }
 
@@ -33,7 +35,7 @@ class App extends Component {
     for (let i = 0; i < lines.length; i++) {
       const [a, b, c] = lines[i]
       if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-        return squares[a]
+        return [squares[a], lines[i]]
       }
     }
     return null;
@@ -79,6 +81,12 @@ class App extends Component {
     })
   }
 
+  handleToggle() {
+    this.setState({
+      toggleOrder: !this.state.toggleOrder
+    })
+  }
+
   jumpTo(step) {
     const classes = Array(9).fill()
     classes[step] = 'bold'
@@ -96,6 +104,7 @@ class App extends Component {
     const current = history[this.state.stepNumber];
     const winner = this.calculateWinner(current.squares);
 
+    // history = this.state.toggleOrder ? history : history.reverse()
     const moves = history.map((step, move) => {
       const desc = move ?
         'Positon: (' + this.state.positons[move] + '). Go to move # ' + move :
@@ -108,22 +117,29 @@ class App extends Component {
       )
     })
 
+    if (!this.state.toggleOrder) {
+      moves.sort((a, b) => b.key - a.key)
+    }
     let status;
+
+    // console.log(winner)
     if (winner) {
-      status = 'Winner: ' + winner;
+      status = 'Winner: ' + winner[0];
     } else {
       status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
-
     }
 
     return (
       <div className="">
         <div>
-          <Board squares={current.squares} onClick={(i) => this.handleClick(i)} />
+          <Board winner={winner} squares={current.squares} onClick={(i) => this.handleClick(i)} />
         </div>
         <div className="game-info">
           <div>{status}</div>
-          <ol>{moves}</ol>
+          <button onClick={() => this.handleToggle()}>
+            {this.state.toggleOrder ? 'Asc Order' : 'Dec Order'}
+          </button>
+          <ol >{moves}</ol>
         </div>
       </div>
     );
