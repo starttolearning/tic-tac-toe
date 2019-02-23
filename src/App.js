@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 // import logo from './logo.svg';
 import './App.css';
 import Board from './components/Board'
+import Clock from './components/Clock'
 
 
 class App extends Component {
@@ -104,7 +105,6 @@ class App extends Component {
     const current = history[this.state.stepNumber];
     const winner = this.calculateWinner(current.squares);
 
-    // history = this.state.toggleOrder ? history : history.reverse()
     const moves = history.map((step, move) => {
       const desc = move ?
         'Positon: (' + this.state.positons[move] + '). Go to move # ' + move :
@@ -117,12 +117,13 @@ class App extends Component {
       )
     })
 
+    // Toggle Order use JSX.sort funciton
+    // Parameters: sort.key
     if (!this.state.toggleOrder) {
       moves.sort((a, b) => b.key - a.key)
     }
-    let status;
 
-    // console.log(winner)
+    let status;
     if (winner) {
       status = 'Winner: ' + winner[0];
     } else if (!winner && this.state.stepNumber === 9) {
@@ -134,6 +135,9 @@ class App extends Component {
 
     return (
       <div className="">
+        <Clock />
+        <Clock />
+        <Clock />
         <div>
           <Board winner={winner} squares={current.squares} onClick={(i) => this.handleClick(i)} />
         </div>
